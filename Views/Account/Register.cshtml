@@ -1,0 +1,81 @@
+@model RuinsandMuseums.Models.User
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text">
+                    <a href="#"><i class="fa fa-home"></i> Home</a>
+                    <span>Register</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="register-login-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="register-form">
+                    <h2>Create Account</h2>
+                    <form asp-action="Register" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="group-input">
+                            <label asp-for="FirstName">First Name *</label>
+                            <input asp-for="FirstName" type="text" required>
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+
+                        <div class="group-input">
+                            <label asp-for="LastName">Last Name *</label>
+                            <input asp-for="LastName" type="text" required>
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+
+                        <div class="group-input">
+                            <label asp-for="Email">Email address *</label>
+                            <input asp-for="Email" type="email" required>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="group-input">
+                            <label asp-for="Password">Password *</label>
+                            <input asp-for="Password" type="password" required>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="group-input">
+                            <label asp-for="PhoneNumber">Phone Number</label>
+                            <input asp-for="PhoneNumber" type="tel">
+                            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        </div>
+
+                        <div class="group-input">
+                            <label asp-for="Address">Address</label>
+                            <textarea asp-for="Address" rows="3"></textarea>
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="site-btn register-btn">Create Account</button>
+                    </form>
+                    <div class="switch-login">
+                        <a href="/Login" class="or-login">Already have an account? Sign In</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+   
+</style>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

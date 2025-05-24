@@ -1,0 +1,56 @@
+@model RuinsandMuseums.Models.ViewModels.RuinsAndMuseumsViewModel
+@{
+    ViewData["Title"] = "Edit Museum";
+}
+
+<div class="container mt-4">
+    <h1>Edit Museum</h1>
+
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="EditMuseum" method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="NewMuseum.Id" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="NewMuseum.Name">Name</label>
+                    <input asp-for="NewMuseum.Name" class="form-control" required />
+                    <span asp-validation-for="NewMuseum.Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="NewMuseum.Location">Location</label>
+                    <input asp-for="NewMuseum.Location" class="form-control" required />
+                    <span asp-validation-for="NewMuseum.Location" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="NewMuseum.Description">Description</label>
+                    <textarea asp-for="NewMuseum.Description" class="form-control" rows="3" required></textarea>
+                    <span asp-validation-for="NewMuseum.Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="NewMuseum.ImageFile">New Image (optional)</label>
+                    <input type="file" asp-for="NewMuseum.ImageFile" class="form-control" accept="image/*" />
+                    @if (!string.IsNullOrEmpty(Model.NewMuseum.ImagePath))
+                    {
+                        <div class="mt-2">
+                            <p>Current Image:</p>
+                            <img src="@Model.NewMuseum.ImagePath" alt="@Model.NewMuseum.Name" class="img-thumbnail" style="max-width: 200px;" />
+                        </div>
+                    }
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a href="@Url.Action("ManageRuinsAndMuseums")" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 

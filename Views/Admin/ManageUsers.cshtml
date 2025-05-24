@@ -1,0 +1,59 @@
+@model IEnumerable<RuinsandMuseums.Models.User>
+@{
+    ViewData["Title"] = ViewData["PageTitle"];
+}
+
+<div class="container mt-4">
+    <h1>@ViewData["PageTitle"]</h1>
+    <p class="text-muted">Last updated: @ViewData["LastUpdated"]</p>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">User Statistics</h5>
+                    <p class="card-text">Total Users: @ViewBag.TotalUsers</p>
+                    <p class="card-text">Admin Users: @ViewBag.AdminCount</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4 mb-3">
+        <a href="@Url.Action("CreateUser", "Admin")" class="btn btn-success">Add User</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.FullName</td>
+                        <td>@user.Email</td>
+                        <td>@(user.IsAdmin ? "Administrator" : "User")</td>
+                        <td>@user.CreatedAt.ToString("g")</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a href="@Url.Action("EditUser", "Admin", new { id = user.Id })" class="btn btn-sm btn-primary">Edit</a>
+                                <a href="@Url.Action("DeleteUser", "Admin", new { id = user.Id })" class="btn btn-sm btn-danger">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-4">
+        <a href="@Url.Action("Index", "Admin")" class="btn btn-secondary">Back to Admin</a>
+    </div>
+</div> 

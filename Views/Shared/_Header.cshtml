@@ -1,0 +1,67 @@
+  @using RuinsandMuseums.Models
+  @using System.Security.Claims
+  <header class="header-section">
+        <div class="container">
+            <div class="inner-header">
+                <div class="col-lg-1 col-md-1">
+                        <div class="logo">
+                            <a href="/"><img src="/img/logo.png" alt=""></a>
+                        </div>
+                 </div>
+                <div class="col-lg-4 col-md-6">
+                         <div class="logo-text">
+                            <a href="/"> Turkey's Ruins and Museums </a>
+                         </div>
+                 </div>
+                  <div class="col-lg-7 col-md-7">
+                     @if (User.Identity.IsAuthenticated)
+                    {
+                        var fullName = ((ClaimsIdentity)User.Identity).FindFirst("FullName")?.Value ?? User.Identity.Name;
+                        <div>
+                             <div class="login-button">
+                                <form asp-action="Logout" asp-controller="Account" method="post">
+                                    @Html.AntiForgeryToken()
+                                        <button type="submit"class="login-button-1">Logout</button>
+                                </form>
+                            </div>
+                            <a href="/Profile" class="login-panel">
+                                <i class="fa fa-user"></i>
+                                @fullName
+                            </a>
+
+                        </div>
+                    }
+                    else
+                    {
+                        <a href="/Login" class="login-panel"><i class="fa fa-user"></i> Login</a>
+                    }
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="nav-item">
+            <div class="container">
+                <div class="nav-depart">
+                </div>
+                <nav class="nav-menu mobile-menu">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="#">Ruins</a>
+                            <ul class="dropdown">
+                                <li><a href="/Ruins">Ruins</a></li>
+                                <li><a href="/Museums">Museums</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="#">Pages</a>
+                            <ul class="dropdown">
+                                <li><a href="/Register">Register</a></li>
+                                <li><a href="/Login">Login</a></li>
+                            </ul>
+                        <li><a href="/About">About</a></li>
+                        </li>
+                    </ul>
+                </nav>
+                <div id="mobile-menu-wrap"></div>
+            </div>
+        </div>
+    </header>

@@ -1,0 +1,146 @@
+@model RuinsandMuseums.Models.ViewModels.RuinsAndMuseumsViewModel
+@{
+    ViewData["Title"] = "Manage Ruins and Museums";
+}
+
+<div class="container mt-4">
+    <h1>Manage Ruins and Museums</h1>
+    <p class="text-muted">Last updated: @DateTime.Now.ToString("g")</p>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- Ruins Section -->
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h2 class="h4 mb-0">Ruins</h2>
+            <a href="@Url.Action("AddRuin", "Admin")" class="btn btn-success">Add New Ruin</a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Location</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var ruin in Model.Ruins)
+                        {
+                            <tr>
+                                <td>@ruin.Name</td>
+                                <td>@ruin.Location</td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-sm btn-primary" onclick="editRuin(@ruin.Id)">Edit</button>
+                                        <button type="button" class="btn btn-sm btn-danger" onclick="deleteRuin(@ruin.Id)">Delete</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Museums Section -->
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h2 class="h4 mb-0">Museums</h2>
+            <a href="@Url.Action("AddMuseum", "Admin")" class="btn btn-success">Add New Museum</a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Location</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var museum in Model.Museums)
+                        {
+                            <tr>
+                                <td>@museum.Name</td>
+                                <td>@museum.Location</td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-sm btn-primary" onclick="editMuseum(@museum.Id)">Edit</button>
+                                        <button type="button" class="btn btn-sm btn-danger" onclick="deleteMuseum(@museum.Id)">Delete</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="@Url.Action("Index", "Admin")" class="btn btn-secondary">Back to Admin</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function editRuin(id) {
+            window.location.href = '@Url.Action("EditRuin", "Admin")/' + id;
+        }
+
+        function deleteRuin(id) {
+            if (confirm('Are you sure you want to delete this ruin?')) {
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '@Url.Action("DeleteRuin", "Admin")';
+                
+                var token = '@Html.AntiForgeryToken()';
+                form.innerHTML = token;
+
+                var idInput = document.createElement('input');
+                idInput.type = 'hidden';
+                idInput.name = 'id';
+                idInput.value = id;
+                form.appendChild(idInput);
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+
+        function editMuseum(id) {
+            window.location.href = '@Url.Action("EditMuseum", "Admin")/' + id;
+        }
+
+        function deleteMuseum(id) {
+            if (confirm('Are you sure you want to delete this museum?')) {
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '@Url.Action("DeleteMuseum", "Admin")';
+                
+                var token = '@Html.AntiForgeryToken()';
+                form.innerHTML = token;
+
+                var idInput = document.createElement('input');
+                idInput.type = 'hidden';
+                idInput.name = 'id';
+                idInput.value = id;
+                form.appendChild(idInput);
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    </script>
+} 

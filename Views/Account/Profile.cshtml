@@ -1,0 +1,69 @@
+@model RuinsandMuseums.Models.User
+@{
+    ViewData["Title"] = "User Profile";
+}
+
+<div class="breacrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-text">
+                    <a href="#"><i class="fa fa-home"></i> Home</a>
+                    <span>Profile</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="profile-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="profile-content">
+                    <h2>User Profile</h2>
+                    <div class="profile-info">
+                        <div class="info-group">
+                            <label>First Name:</label>
+                            <span>@Model.FirstName</span>
+                        </div>
+                        <div class="info-group">
+                            <label>Last Name:</label>
+                            <span>@Model.LastName</span>
+                        </div>
+                        <div class="info-group">
+                            <label>Email:</label>
+                            <span>@Model.Email</span>
+                        </div>
+                        <div class="info-group">
+                            <label>Role:</label>
+                            <span>@(Model.IsAdmin ? "Administrator" : "Regular User")</span>
+                        </div>
+                        <div class="info-group">
+                            <label>Address:</label>
+                            <span>@(Model.Address ?? "Not provided")</span>
+                        </div>
+                        <div class="info-group">
+                            <label>Phone Number:</label>
+                            <span>@(Model.PhoneNumber ?? "Not provided")</span>
+                        </div>
+                        <div class="info-group">
+                            <label>Member Since:</label>
+                            <span>@Model.CreatedAt.ToString("MMMM dd, yyyy")</span>
+                        </div>
+                    </div>
+                    <div class="profile-actions">
+                        @if (Model.IsAdmin)
+                        {
+                            <a href="/Admin" class="site-btn">Admin Panel</a>
+                        }
+                        <form asp-action="Logout" asp-controller="Account" method="post" style="display:inline;">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="site-btn logout-btn" style="background:#e7ab3c; margin-top:15px;">Logout</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

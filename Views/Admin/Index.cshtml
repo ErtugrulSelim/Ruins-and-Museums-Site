@@ -1,0 +1,106 @@
+@model RuinsandMuseums.Models.AdminDashboardViewModel
+@{
+    ViewData["Title"] = ViewBag.PageTitle;
+}
+
+<div class="container mt-4">
+    <h1>@ViewData["WelcomeMessage"]</h1>
+    <p class="text-muted">Last updated: @ViewBag.LastUpdated</p>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Users</h5>
+                    <p class="card-text display-4">@Model.TotalUsers</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Ruins</h5>
+                    <p class="card-text display-4">@Model.TotalRuins</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Museums</h5>
+                    <p class="card-text display-4">@Model.TotalMuseums</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Recent Users</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        @foreach (var user in Model.RecentUsers)
+                        {
+                            <li class="list-group-item">
+                                @user.FullName
+                                <small class="text-muted d-block">@user.Email</small>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Recent Ruins</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        @foreach (var ruin in Model.RecentRuins)
+                        {
+                            <li class="list-group-item">
+                                @ruin.Name
+                                <small class="text-muted d-block">@ruin.Location</small>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Recent Museums</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        @foreach (var museum in Model.RecentMuseums)
+                        {
+                            <li class="list-group-item">
+                                @museum.Name
+                                <small class="text-muted d-block">@museum.Location</small>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a class="btn btn-info" href="@Url.Action("ManageUsers", "Admin")">Manage Users</a>
+        <a class="btn btn-warning" href="@Url.Action("ManageRuinsAndMuseums", "Admin")">Manage Ruins & Museums</a>
+    </div>
+</div> 
